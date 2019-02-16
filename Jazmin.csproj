@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ToolCommandName>jazmin</ToolCommandName>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PackAsTool>True</PackAsTool>
+    <OutputType>Exe</OutputType>
+    <Description>Filters comments and unnecessary whitespace from JavaScript</Description>
+    <Copyright>Copyright (c) 2005 Atif Aziz. Portion Copyright (c) 2001 Douglas Crockford.</Copyright>
+    <Authors>Atif Aziz</Authors>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/atifaziz/Jazmin</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/atifaziz/Jazmin.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageOutputPath>dist</PackageOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
