@@ -41,9 +41,9 @@ namespace Jazmin
 
     #endregion
 
-    internal sealed class Program
+    sealed class Program
     {
-        private static int Main(string[] args)
+        static int Main(string[] args)
         {
             try
             {

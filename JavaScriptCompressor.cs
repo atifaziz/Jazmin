@@ -185,7 +185,7 @@ namespace Jazmin
 
     #endregion
 
-    internal sealed class JavaScriptCompressor
+    sealed class JavaScriptCompressor
     {
         //
         // Public functions
@@ -214,15 +214,15 @@ namespace Jazmin
         // Private implementation
         //
 
-        private int aa;
-        private int bb;
-        private int lookahead = eof;
-        private TextReader reader = Console.In;
-        private TextWriter writer = Console.Out;
+        int aa;
+        int bb;
+        int lookahead = eof;
+        TextReader reader = Console.In;
+        TextWriter writer = Console.Out;
 
-        private const int eof = -1;
+        const int eof = -1;
 
-        private JavaScriptCompressor(TextReader reader, TextWriter writer)
+        JavaScriptCompressor(TextReader reader, TextWriter writer)
         {
             Debug.Assert(reader != null);
             Debug.Assert(writer != null);
@@ -237,7 +237,7 @@ namespace Jazmin
                 Most spaces and linefeeds will be removed.
         */
 
-        private void Compress()
+        void Compress()
         {
             aa = '\n';
             Action(3);
@@ -329,7 +329,7 @@ namespace Jazmin
                 linefeed.
         */
 
-        private int Get()
+        int Get()
         {
             int ch = lookahead;
             lookahead = eof;
@@ -352,7 +352,7 @@ namespace Jazmin
         /* Peek -- get the next character without getting it.
         */
 
-        private int Peek()
+        int Peek()
         {
             lookahead = Get();
             return lookahead;
@@ -362,7 +362,7 @@ namespace Jazmin
                 if a '/' is followed by a '/' or '*'.
         */
 
-        private int Next()
+        int Next()
         {
             int ch = Get();
             if (ch == '/')
@@ -411,7 +411,7 @@ namespace Jazmin
            Action recognizes a regular expression if it is preceded by ( or , or =.
         */
 
-        private void Action(int d)
+        void Action(int d)
         {
             switch (d)
             {
@@ -474,7 +474,7 @@ namespace Jazmin
         }
 
 
-        private void Write(int ch)
+        void Write(int ch)
         {
             writer.Write((char) ch);
         }
@@ -483,7 +483,7 @@ namespace Jazmin
                 dollar sign, or non-ASCII character.
         */
 
-        private static bool IsAlphanum(int ch)
+        static bool IsAlphanum(int ch)
         {
             return ((ch >= 'a' && ch <= 'z') ||
                 (ch >= '0' && ch <= '9') ||
