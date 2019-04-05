@@ -185,7 +185,7 @@ namespace Jazmin
 
     #endregion
 
-    sealed class JavaScriptCompressor
+    partial class JavaScriptCompressor
     {
         //
         // Public functions
@@ -193,20 +193,17 @@ namespace Jazmin
 
         public static string Compress(string source)
         {
-            StringWriter writer = new StringWriter();
+            var writer = new StringWriter();
             Compress(new StringReader(source), writer);
             return writer.ToString();
         }
 
         public static void Compress(TextReader reader, TextWriter writer)
         {
-            if (reader == null)
-                throw new ArgumentNullException("reader");
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
+            if (writer == null) throw new ArgumentNullException(nameof(writer));
 
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-
-            JavaScriptCompressor compressor = new JavaScriptCompressor(reader, writer);
+            var compressor = new JavaScriptCompressor(reader, writer);
             compressor.Compress();
         }
 
@@ -246,14 +243,7 @@ namespace Jazmin
                 switch (aa)
                 {
                     case ' ':
-                        if (IsAlphanum(bb))
-                        {
-                            Action(1);
-                        }
-                        else
-                        {
-                            Action(2);
-                        }
+                        Action(IsAlphanum(bb) ? 1 : 2);
                         break;
                     case '\n':
                     switch (bb)
@@ -269,14 +259,7 @@ namespace Jazmin
                             Action(3);
                             break;
                         default:
-                            if (IsAlphanum(bb))
-                            {
-                                Action(1);
-                            }
-                            else
-                            {
-                                Action(2);
-                            }
+                            Action(IsAlphanum(bb) ? 1 : 2);
                             break;
                     }
                         break;
@@ -304,14 +287,7 @@ namespace Jazmin
                                 Action(1);
                                 break;
                             default:
-                                if (IsAlphanum(aa))
-                                {
-                                    Action(1);
-                                }
-                                else
-                                {
-                                    Action(3);
-                                }
+                                Action(IsAlphanum(aa) ? 1 : 3);
                                 break;
                         }
                             break;
@@ -331,7 +307,7 @@ namespace Jazmin
 
         int Get()
         {
-            int ch = lookahead;
+            var ch = lookahead;
             lookahead = eof;
             if (ch == eof)
             {
@@ -352,11 +328,7 @@ namespace Jazmin
         /* Peek -- get the next character without getting it.
         */
 
-        int Peek()
-        {
-            lookahead = Get();
-            return lookahead;
-        }
+        int Peek() => lookahead = Get();
 
         /* Next -- get the next character, excluding comments. Peek() is used to see
                 if a '/' is followed by a '/' or '*'.
@@ -364,7 +336,7 @@ namespace Jazmin
 
         int Next()
         {
-            int ch = Get();
+            var ch = Get();
             if (ch == '/')
             {
                 switch (Peek())
@@ -432,7 +404,7 @@ namespace Jazmin
                             }
                             if (aa <= '\n')
                             {
-                                string message = string.Format("Unterminated string literal: '{0}'.", aa);
+                                var message = $"Unterminated string literal: '{aa}'.";
                                 throw new Exception(message);
                             }
                             if (aa == '\\')
@@ -473,25 +445,19 @@ namespace Jazmin
             }
         }
 
-
-        void Write(int ch)
-        {
-            writer.Write((char) ch);
-        }
+        void Write(int ch) => writer.Write((char) ch);
 
         /* IsAlphanum -- return true if the character is a letter, digit, underscore,
                 dollar sign, or non-ASCII character.
         */
 
         static bool IsAlphanum(int ch)
-        {
-            return ((ch >= 'a' && ch <= 'z') ||
-                (ch >= '0' && ch <= '9') ||
-                (ch >= 'A' && ch <= 'Z') ||
-                ch == '_' || ch == '$' || ch == '\\' || ch > 126);
-        }
+            => ch >= 'a' && ch <= 'z'
+            || ch >= '0' && ch <= '9'
+            || ch >= 'A' && ch <= 'Z'
+            || ch == '_' || ch == '$' || ch == '\\' || ch > 126;
 
-        [ Serializable ]
+        [Serializable]
         public class Exception : System.Exception
         {
             public Exception() {}

@@ -41,13 +41,13 @@ namespace Jazmin
 
     #endregion
 
-    sealed class Program
+    static class Program
     {
         static int Main(string[] args)
         {
             try
             {
-                foreach (string arg in args)
+                foreach (var arg in args)
                 {
                     Console.Write("// ");
                     Console.WriteLine(arg);
