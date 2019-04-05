@@ -214,8 +214,8 @@ namespace Jazmin
         int aa;
         int bb;
         int lookahead = eof;
-        readonly TextReader reader = Console.In;
-        readonly TextWriter writer = Console.Out;
+        readonly TextReader reader;
+        readonly TextWriter writer;
 
         const int eof = -1;
 
