@@ -465,7 +465,7 @@ namespace Jazmin
             public Exception(string message) :
                 base(message) {}
 
-            public Exception(string message, Exception innerException) :
+            public Exception(string message, System.Exception innerException) :
                 base(message, innerException) {}
 
             protected Exception(SerializationInfo info, StreamingContext context) :
